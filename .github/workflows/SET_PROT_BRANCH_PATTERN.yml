@@ -31,30 +31,30 @@ jobs:
 
               BRANCH=$(jq -r '.repositories[] | select(.repo_name == $u) | .branches[$i].branch_name' repositoriesPattern.json)       
 
-            REPOSITORY_ID=$(curl -s -H "Authorization: bearer ${{ secrets.GH_PAT }}" \
-              -H "Accept: application/vnd.github.v3+json" \
-              "https://api.github.com/repos/$owner/$u" \
-              | jq -r '.node_id')
+              REPOSITORY_ID=$(curl -s -H "Authorization: bearer ${{ secrets.GH_PAT }}" \
+                -H "Accept: application/vnd.github.v3+json" \
+                "https://api.github.com/repos/$owner/$u" \
+                | jq -r '.node_id')
 
-            # Crear la protección de rama utilizando el nuevo ID
-            curl -X POST \
-              -H "Authorization: bearer ${{ secrets.GH_PAT }}" \
-              -H "Accept: application/vnd.github.v3+json" \
-              -H "Content-Type: application/json" \
-              "https://api.github.com/graphql" \
-              -d '{
-                "query": "mutation CreateBranchProtectionRule($input: CreateBranchProtectionRuleInput!) { createBranchProtectionRule(input: $input) { branchProtectionRule { id } } }",
-                "variables": {
-                  "input": {
-                    "repositoryId": "'"$REPOSITORY_ID"'",
-                    "pattern": "'"$BRANCH"'",
-                    "requiredApprovingReviewCount": 1,
-                    "dismissesStaleReviews": true,
-                    "requiresCodeOwnerReviews": true,
-                    "isAdminEnforced": true,
-                    "requiredStatusCheckContexts": ["ci"]
+              # Crear la protección de rama utilizando el nuevo ID
+              curl -X POST \
+                -H "Authorization: bearer ${{ secrets.GH_PAT }}" \
+                -H "Accept: application/vnd.github.v3+json" \
+                -H "Content-Type: application/json" \
+                "https://api.github.com/graphql" \
+                -d '{
+                  "query": "mutation CreateBranchProtectionRule($input: CreateBranchProtectionRuleInput!) { createBranchProtectionRule(input: $input) { branchProtectionRule { id } } }",
+                  "variables": {
+                    "input": {
+                      "repositoryId": "'"$REPOSITORY_ID"'",
+                      "pattern": "'"$BRANCH"'",
+                      "requiredApprovingReviewCount": 1,
+                      "dismissesStaleReviews": true,
+                      "requiresCodeOwnerReviews": true,
+                      "isAdminEnforced": true,
+                      "requiredStatusCheckContexts": ["ci"]
+                    }
                   }
-                }
-              }'
-              done        
+                }'
+                done        
           done
