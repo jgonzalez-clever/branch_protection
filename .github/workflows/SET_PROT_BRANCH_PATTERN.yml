@@ -24,8 +24,7 @@ jobs:
           for u in $REPOS
           do
 
-          for BRANCH in $(jq -r --arg REPO "$REPO" '.repositories[] | select(.repo_name == $REPO) | .branches[].branch_name' ~/Desktop/clever/branch_protection/repositoriesPattern.json)
-          do 
+            for BRANCH in $(jq -r --arg REPO "$REPO" '.repositories[] | select(.repo_name == $REPO) | .branches[].branch_name' ~/Desktop/clever/branch_protection/repositoriesPattern.json)
             do
               echo "debug repo: $u"
 
@@ -54,5 +53,5 @@ jobs:
                     }
                   }
                 }'
-                done        
+            done        
           done
