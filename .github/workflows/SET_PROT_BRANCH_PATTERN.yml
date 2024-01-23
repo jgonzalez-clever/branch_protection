@@ -20,7 +20,7 @@ jobs:
           REPOS=$(jq -r '.repositories[].repo_name' repositoriesPattern.json) && echo $repo_name
           owner=$(jq -r '.owner' repositoriesPattern.json) && echo $owner
           RULES=$(cat rules.txt)
-          echo "$rules"
+          echo "$RULES"
 
 
           # LOOP DE REPOS
