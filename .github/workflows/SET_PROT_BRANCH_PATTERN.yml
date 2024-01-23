@@ -57,7 +57,7 @@ jobs:
               "variables": {
                 "input": {
                   "repositoryId": "'"$REPOSITORY_ID"'",
-                  "pattern": "'"$u/*"'"',
+                  "pattern": "'"$u/*"'",
                   "requiredApprovingReviewCount": 1,
                   "dismissesStaleReviews": true,
                   "requiresCodeOwnerReviews": true,
