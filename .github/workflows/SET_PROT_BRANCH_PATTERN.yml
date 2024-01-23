@@ -19,7 +19,7 @@ jobs:
           # LISTAR REPOS
           REPOS=$(jq -r '.repositories[].repo_name' repositoriesPattern.json) && echo $repo_name
           owner=$(jq -r '.owner' repositoriesPattern.json) && echo $owner
-          rules=$(cat rules.txt)
+          rules=$(cat rules.txt"\n")
           echo "$rules"
 
 
@@ -47,7 +47,8 @@ jobs:
                     "input": {
                       "repositoryId": "'"$REPOSITORY_ID"'",
                       "pattern": "'"$BRANCH"'",
-                      "'"$rules"'" }
+                      "'$rules'" 
+                    }
                   }
                 }'
             done        
