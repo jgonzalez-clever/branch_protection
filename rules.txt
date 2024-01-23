@@ -1,3 +1,4 @@
+"requiresApprovingReviews": true,
 "requiredApprovingReviewCount": 1,
 "dismissesStaleReviews": true,
 "requiresCodeOwnerReviews": true,
