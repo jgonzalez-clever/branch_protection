@@ -45,7 +45,9 @@ jobs:
                   "query": "mutation CreateBranchProtectionRule($input: CreateBranchProtectionRuleInput!) { createBranchProtectionRule(input: $input) { branchProtectionRule { id } } }",
                   "variables": {
                     "input": {
-                      '$rules'
+                      "repositoryId": "'"$REPOSITORY_ID"'",
+                      "pattern": "'"$BRANCH"'",
+                      "'"$rules"'"
                     }
                   }
                 }'
