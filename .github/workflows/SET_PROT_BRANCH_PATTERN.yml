@@ -1,4 +1,3 @@
-
 name: Set Branch Protection Pattern
 
 on:
@@ -19,42 +18,33 @@ jobs:
           # LISTAR REPOS
           REPOS=$(jq -r '.repositories[].repo_name' repositoriesPattern.json) && echo $repo_name
           owner=$(jq -r '.owner' repositoriesPattern.json) && echo $owner
-          rules=$(cat rules.txt)
-          echo "$rules"
-
-
+          RULES=$(cat rules.txt)
+          echo "$RULES"
           # LOOP DE REPOS
           for u in $REPOS
           do
             for BRANCH in $(jq -r --arg REPO "$u" '.repositories[] | select(.repo_name == $REPO) | .branches[].branch_name' repositoriesPattern.json)
             do
               echo "debug repo: $u"
-
               REPOSITORY_ID=$(curl -s -H "Authorization: bearer ${{ secrets.GH_PAT }}" \
                 -H "Accept: application/vnd.github.v3+json" \
                 "https://api.github.com/repos/$owner/$u" \
                 | jq -r '.node_id')
-
               # Crear la protección de rama utilizando el nuevo ID
               curl -X POST \
                 -H "Authorization: bearer ${{ secrets.GH_PAT }}" \
                 -H "Accept: application/vnd.github.v3+json" \
                 -H "Content-Type: application/json" \
                 "https://api.github.com/graphql" \
-                -d '{
-                  "query": "mutation CreateBranchProtectionRule($input: CreateBranchProtectionRuleInput!) { createBranchProtectionRule(input: $input) { branchProtectionRule { id } } }",
-                  "variables": {
-                    "input": {
-                      "repositoryId": "'"$REPOSITORY_ID"'",
-                      "pattern": "'"$BRANCH"'",
-                      "requiredApprovingReviewCount": 1,
-                      "dismissesStaleReviews": true,
-                      "requiresCodeOwnerReviews": true,
-                      "isAdminEnforced": true,
-                      "requiredStatusCheckContexts": ["ci"]
+                -d "{
+                  \"query\": \"mutation CreateBranchProtectionRule(\$input: CreateBranchProtectionRuleInput!) { createBranchProtectionRule(input: \$input) { branchProtectionRule { id } } }\",
+                  \"variables\": {
+                    \"input\": {
+                      \"repositoryId\": \"$REPOSITORY_ID\",
+                      \"pattern\": \"$BRANCH\",
+                      $RULES
                     }
                   }
-                }'
+                }"
             done        
           done
-
