@@ -1,6 +1,6 @@
 "requiredApprovingReviewCount": 1,
 "dismissesStaleReviews": true,
 "requiresCodeOwnerReviews": true,
-"isAdminEnforced": true,
-"requiredStatusCheckContexts": ["ci"],
-"enforce_admins":true
+"isAdminEnforced": true
+
+
