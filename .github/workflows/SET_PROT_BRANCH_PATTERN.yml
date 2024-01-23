@@ -47,7 +47,7 @@ jobs:
                     "input": {
                       "repositoryId": "'"$REPOSITORY_ID"'",
                       "pattern": "'"$BRANCH"'",
-                      "'"$rules"'"
+                      "'$rules'"
                     }
                   }
                 }'
