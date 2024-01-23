@@ -9,6 +9,9 @@
           },
           {
             "branch_name": "dev/*"
+          },
+          {
+            "branch_name": "test"
           }
         ]
       },
@@ -20,6 +23,9 @@
           },
           {
             "branch_name": "release/*"
+          },
+          {
+            "branch_name": "test"
           }
         ]
       }
