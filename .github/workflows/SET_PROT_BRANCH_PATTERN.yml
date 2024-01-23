@@ -19,7 +19,7 @@ jobs:
           # LISTAR REPOS
           REPOS=$(jq -r '.repositories[].repo_name' repositoriesPattern.json) && echo $repo_name
           owner=$(jq -r '.owner' repositoriesPattern.json) && echo $owner
-          rules=$(cat rules.txt)
+          RULES=$(cat rules.txt)
           echo "$rules"
 
 
@@ -41,16 +41,16 @@ jobs:
                 -H "Accept: application/vnd.github.v3+json" \
                 -H "Content-Type: application/json" \
                 "https://api.github.com/graphql" \
-                -d '{
-                  "query": "mutation CreateBranchProtectionRule($input: CreateBranchProtectionRuleInput!) { createBranchProtectionRule(input: $input) { branchProtectionRule { id } } }",
-                  "variables": {
-                    "input": {
-                      "repositoryId": "'"$REPOSITORY_ID"'",
-                      "pattern": "'"$BRANCH"'",
-                      "'$rules'"
+                -d "{
+                  \"query\": \"mutation CreateBranchProtectionRule(\$input: CreateBranchProtectionRuleInput!) { createBranchProtectionRule(input: \$input) { branchProtectionRule { id } } }\",
+                  \"variables\": {
+                    \"input\": {
+                      \"repositoryId\": \"$REPOSITORY_ID\",
+                      \"pattern\": \"$BRANCH\",
+                      $RULES
                     }
                   }
-                }'
+                }"
             done        
           done
 
