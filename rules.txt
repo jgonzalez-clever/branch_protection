@@ -2,4 +2,5 @@
 "dismissesStaleReviews": true,
 "requiresCodeOwnerReviews": true,
 "isAdminEnforced": true,
-"requiredStatusCheckContexts": ["ci"]
+"requiredStatusCheckContexts": ["ci"],
+"enforce_admins":true
