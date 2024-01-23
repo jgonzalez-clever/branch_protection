@@ -16,7 +16,7 @@ jobs:
       - name: Set branch protection rules on selected reposiories
         run: |
           # LISTAR REPOS
-          REPOS="Test.Microservice.2 Test.Microservice.1 Test.Microfrontend.2 Test.Microfrontend.1"
+          REPOS=$(jq -r '.repositories[].repo_name' repositories.json) && echo $repo_name
           
           # LOOP DE REPOS
           for u in $REPOS
