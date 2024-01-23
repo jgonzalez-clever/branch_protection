@@ -22,6 +22,7 @@ jobs:
           branches_repo1=$(jq -r '.repositories[] | select(.repo_name == "repo1") | .branches[].branch_name' repositoriesPattern.json)
 
           echo "$branches_repo1"
+          echo 'predebug'
                   
           # LOOP DE REPOS
           for u in $REPOS
