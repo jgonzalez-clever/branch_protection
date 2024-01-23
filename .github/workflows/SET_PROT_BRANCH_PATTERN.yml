@@ -57,7 +57,7 @@ jobs:
               "variables": {
                 "input": {
                   "repositoryId": "'"$REPOSITORY_ID"'",
-                  "pattern": "$u/*",
+                  "pattern": "'"$u/*"'"',
                   "requiredApprovingReviewCount": 1,
                   "dismissesStaleReviews": true,
                   "requiresCodeOwnerReviews": true,
@@ -85,6 +85,7 @@ jobs:
                 curl -L -X PUT -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.GH_PAT }}" -H "X-GitHub-Api-Version: 2022-11-28" "https://api.github.com/repos/$owner/$u/branches/$BRANCH/protection" -d '${{ steps.read-json-config.outputs.BRANCH_CONFIGURATION }}'
               fi
             done
+
           # SE LE CONFIGURA LA PROTECCION DESEADA A LA DEFAULT BRANCH FUERA DEL BUCLE (YA QUE HAY SITUACIONES EN EL QUE LA DEFAULT BRANCH NO ESTA PROTEGIDA Y EL LOOP LO VA A OMITIR
           curl -L -X PUT -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.GH_PAT }}" -H "X-GitHub-Api-Version: 2022-11-28" "https://api.github.com/repos/$owner/$u/branches/$DEFAULT_BRANCH/protection" -d '${{ steps.read-json-config.outputs.BRANCH_CONFIGURATION }}'
           # SE ELIMINAN LOS ARCHIVOS TXT GENERADOS
