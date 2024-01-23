@@ -24,12 +24,10 @@ jobs:
           for u in $REPOS
           do
 
-            for i in $(seq 1 $REPOS)
+          for BRANCH in $(jq -r --arg REPO "$REPO" '.repositories[] | select(.repo_name == $REPO) | .branches[].branch_name' ~/Desktop/clever/branch_protection/repositoriesPattern.json)
+          do 
             do
-
-              echo $u
-
-              BRANCH=$(jq -r '.repositories[] | select(.repo_name == $u) | .branches[$i].branch_name' repositoriesPattern.json)       
+              echo "debug repo: $u"
 
               REPOSITORY_ID=$(curl -s -H "Authorization: bearer ${{ secrets.GH_PAT }}" \
                 -H "Accept: application/vnd.github.v3+json" \
