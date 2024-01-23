@@ -18,7 +18,7 @@ jobs:
           # LISTAR REPOS
           REPOS=$(jq -r '.repositories[].repo_name' repositories.json) && echo $repo_name
           owner=$(jq -r '.owner' repositories.json) && echo $owner
-          
+                  
           # LOOP DE REPOS
           for u in $REPOS
           do
