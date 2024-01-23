@@ -1,5 +1,5 @@
 
-name: Set Branch Protection on Test Repositories
+name: Set Branch Protection Pattern
 
 on:
   workflow_dispatch:
