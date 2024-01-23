@@ -19,6 +19,8 @@ jobs:
           # LISTAR REPOS
           REPOS=$(jq -r '.repositories[].repo_name' repositoriesPattern.json) && echo $repo_name
           owner=$(jq -r '.owner' repositoriesPattern.json) && echo $owner
+          rules=$(rules.txt)
+
 
           # LOOP DE REPOS
           for u in $REPOS
@@ -44,11 +46,7 @@ jobs:
                     "input": {
                       "repositoryId": "'"$REPOSITORY_ID"'",
                       "pattern": "'"$BRANCH"'",
-                      "requiredApprovingReviewCount": 1,
-                      "dismissesStaleReviews": true,
-                      "requiresCodeOwnerReviews": true,
-                      "isAdminEnforced": true,
-                      "requiredStatusCheckContexts": ["ci"]
+                      "'"$rules"'" 
                     }
                   }
                 }'
