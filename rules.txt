@@ -1,7 +1,8 @@
 "requiresApprovingReviews": true,
 "requiredApprovingReviewCount": 1,
+"isAdminEnforced": true,
 "dismissesStaleReviews": true,
 "requiresCodeOwnerReviews": true,
-"isAdminEnforced": true
+
 
 
