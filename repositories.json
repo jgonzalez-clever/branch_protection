@@ -1,0 +1,10 @@
+{
+    "repositories": [
+      {
+        "repo_name": "repo1"
+      },
+      {
+        "repo_name": "repo2"
+      }
+    ]
+}
