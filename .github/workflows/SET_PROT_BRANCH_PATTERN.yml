@@ -17,21 +17,24 @@ jobs:
       - name: Set branch protection rules on selected reposiories
         run: |
           # LISTAR REPOS
-          REPOS=$(jq -r '.repositories[].repo_name' repositoriesPattern.json)
-          OWNER=$(jq -r '.owner' repositoriesPattern.json)
+          REPOS=$(jq -r '.repositories[].repo_name' repositoriesPattern.json) && echo $repo_name
+          owner=$(jq -r '.owner' repositoriesPattern.json) && echo $owner
 
           # LOOP DE REPOS
-          for repo_name in $REPOS
+          for u in $REPOS
           do
-            branches_count=$(jq -r '.repositories[] | select(.repo_name == "'"$repo_name"'") | .branches | length' repositoriesPattern.json)
 
-            # Obtener el ID del repositorio
-            REPOSITORY_ID=$(jq -r '.repositories[] | select(.repo_name == "'"$repo_name"'") | .id' repositoriesPattern.json)
-
-            # LOOP DE BRANCHES
-            for ((i=0; i<$branches_count; i++))
+            for i in $(seq 1 $REPOS)
             do
-              BRANCH=$(jq -r '.repositories[] | select(.repo_name == "'"$repo_name"'") | .branches['"$i"'].branch_name' repositoriesPattern.json)
+
+              echo $u
+
+              BRANCH=$(jq -r '.repositories[] | select(.repo_name == $u) | .branches[$i].branch_name' repositoriesPattern.json)       
+
+              REPOSITORY_ID=$(curl -s -H "Authorization: bearer ${{ secrets.GH_PAT }}" \
+                -H "Accept: application/vnd.github.v3+json" \
+                "https://api.github.com/repos/$owner/$u" \
+                | jq -r '.node_id')
 
               # Crear la protección de rama utilizando el nuevo ID
               curl -X POST \
@@ -53,5 +56,5 @@ jobs:
                     }
                   }
                 }'
-            done
+                done        
           done
