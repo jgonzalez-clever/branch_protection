@@ -8,7 +8,7 @@
             "branch_name": "main"
           },
           {
-            "branch_name": "dev"
+            "branch_name": "dev/*"
           }
         ]
       },
