@@ -17,14 +17,17 @@ jobs:
       - name: Set branch protection rules on selected reposiories
         run: |
           # LISTAR REPOS
-          REPOS=$(jq -r '.repositories[].repo_name' repositories.json) && echo $repo_name
-          owner=$(jq -r '.owner' repositories.json) && echo $owner
+          REPOS=$(jq -r '.repositories[].repo_name' repositoriesPattern.json) && echo $repo_name
+          owner=$(jq -r '.owner' repositoriesPattern.json) && echo $owner
+          branches_repo1=$(jq -r '.repositories[] | select(.repo_name == "repo1") | .branches[].branch_name' repositoriesPattern.json)
+          echo "$branches_repo1"
                   
           # LOOP DE REPOS
           for u in $REPOS
           do
             echo $u
-            echo $owner
+            echo $ownerbranches_repo1=$(jq -r '.repositories[] | select(.repo_name == "repo1") | .branches[].branch_name' repositoriesPattern.json)
+
            
             # CARGAR LAS BRANCHES EN UN TXT
             curl -L -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.GH_PAT }}" -H "X-GitHub-Api-Version: 2022-11-28" "https://api.github.com/repos/$owner/$u/branches" | jq -r '.[].name' > BRANCHES.txt

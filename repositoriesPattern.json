@@ -1,0 +1,21 @@
+{
+    "owner": "jgonzalez-clever",
+    "repositories": [
+      {
+        "repo_name": "repo1",
+        "branches": [
+          {
+            "branch_name": "main"
+          },
+          {
+            "branch_name": "dev"
+          }
+        ]
+      },
+      {
+        "repo_name": "repo2",
+        "branches": []
+      }
+    ]
+  }
+  
