@@ -14,7 +14,14 @@
       },
       {
         "repo_name": "repo2",
-        "branches": []
+        "branches": [
+          {
+            "branch_name": "master"
+          },
+          {
+            "branch_name": "release/*"
+          }
+        ]
       }
     ]
   }
