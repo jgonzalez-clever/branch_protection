@@ -2,7 +2,7 @@
 "requiredApprovingReviewCount": 1,
 "isAdminEnforced": true,
 "dismissesStaleReviews": true,
-"requiresCodeOwnerReviews": true,
+"requiresCodeOwnerReviews": true
 
 
 
