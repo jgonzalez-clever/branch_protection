@@ -19,15 +19,15 @@ jobs:
           echo "$RULES"
 
           # LOOP DE REPOS
-          for u in $REPOS
+          for repo in $REPOS
           do
-            for BRANCH in $(jq -r --arg REPO "$u" '.repositories[] | select(.repo_name == $REPO) | .branches[].branch_name' repositoriesPattern.json)
+            for BRANCH in $(jq -r --arg REPO "$repo" '.repositories[] | select(.repo_name == $REPO) | .branches[].branch_name' repositoriesPattern.json)
             do
-              echo "debug repo: $u"
               REPOSITORY_ID=$(curl -s -H "Authorization: bearer ${{ secrets.GH_PAT }}" \
                 -H "Accept: application/vnd.github.v3+json" \
                 "https://api.github.com/repos/$owner/$u" \
                 | jq -r '.node_id')
+
               # Crear la protección de rama utilizando el nuevo ID
               curl -X POST \
                 -H "Authorization: bearer ${{ secrets.GH_PAT }}" \
