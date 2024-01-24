@@ -10,9 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       
-      - id: read-json-config
-        run: echo "BRANCH_CONFIGURATION=$(jq -c . < ./branch_protection.json)" >> $GITHUB_OUTPUT
-
       - name: Set branch protection rules on selected reposiories
         run: |
           # LISTAR REPOS
@@ -20,6 +17,7 @@ jobs:
           owner=$(jq -r '.owner' repositoriesPattern.json) && echo $owner
           RULES=$(cat rules.txt)
           echo "$RULES"
+
           # LOOP DE REPOS
           for u in $REPOS
           do
